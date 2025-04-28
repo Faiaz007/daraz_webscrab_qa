@@ -1,5 +1,4 @@
 from daraz_scraper import DarazScraper
-
 class DarazScraperApp:
     def __init__(self, search_url="https://www.daraz.com.bd/catalog/?q=laptop", max_products=40):
         self.scraper = DarazScraper(search_url, max_products)
