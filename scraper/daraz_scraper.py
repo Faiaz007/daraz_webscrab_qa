@@ -128,11 +128,24 @@ class DarazScraper:
             df = pd.DataFrame(products)
             df.to_csv(csv_path, index=False)
             df.to_json(json_path, orient="records")
-            print(f"✅ Saved {len(products)} products to {csv_path} and {json_path}")
+            print(f"Saved {len(products)} products to {csv_path} and {json_path}")
         except Exception as e:
             print(f"Failed to save data: {e}")
 
+class DarazScraperApp:
+    def __init__(self, search_url="https://www.daraz.com.bd/catalog/?q=laptop", max_products=40):
+        self.scraper = DarazScraper(search_url, max_products)
+
+    def run(self):
+        print("Starting Daraz Scraper...")
+        products = self.scraper.scrape_laptops()
+
+        if products:
+            self.scraper.save_data(products)
+            print("Scraping completed successfully.")
+        else:
+            print("No products found.")
+
 if __name__ == "__main__":
-    scraper = DarazScraper()
-    products = scraper.scrape_laptops()
-    scraper.save_data(products)        
+    app = DarazScraperApp(search_url="https://www.daraz.com.bd/catalog/?q=laptop", max_products=40)
+    app.run()
